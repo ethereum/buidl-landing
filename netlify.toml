@@ -1,0 +1,6 @@
+[build]
+  command = "npx playwright install chromium --with-deps && npm run screenshots && npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "20"
