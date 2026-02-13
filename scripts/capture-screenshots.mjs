@@ -42,7 +42,12 @@ async function main() {
   let browser;
   try {
     const { chromium } = await import("playwright");
-    browser = await chromium.launch();
+    const launchOptions = {};
+    // On Netlify (or CI), use the system-installed Chromium if specified
+    if (process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH) {
+      launchOptions.executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
+    }
+    browser = await chromium.launch(launchOptions);
   } catch (err) {
     console.warn(`Playwright not available (${err.message}).`);
     console.warn("Ensuring placeholders exist...");
